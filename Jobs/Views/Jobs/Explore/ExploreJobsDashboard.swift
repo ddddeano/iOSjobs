@@ -10,37 +10,39 @@ import SwiftUI
 class ExploreJobsViewModel: ObservableObject {
     private var jobManager = JobManager()
     @Published var allJobs: [JobManager.Job] = []
-
+    
     init() {
         fetchAllJobs()
     }
-
+    
     func fetchAllJobs() {
-        jobManager.fetchAllJobs { jobs in
-            DispatchQueue.main.async {
-                self.allJobs = jobs
-                print("Fetched jobs: \(jobs)")
-            }
-        }
-    }
-}
+        /*jobManager.fetchAllJobs { jobs in
+         DispatchQueue.main.async {
+         self.allJobs = jobs
+         print("Fetched jobs: \(jobs)")
+         }
+         }
+         }*/
+    }} 
 
 
 struct ExploreJobsDashboard: View {
     @StateObject var vm = ExploreJobsViewModel()
 
     var body: some View {
-        NavigationView {
-            VStack {
-                ForEach(vm.allJobs, id: \.id) { job in
-                    NavigationLink(destination: JobDetailView(job: job)) {
-                        JobCard(job: job)
-                    }
-                }
-                .padding(.bottom, 10)
-            }
-            .navigationTitle("Explore Jobs")
-        }
+        Text("Hello")
+        /* NavigationStack {
+         VStack {
+         ForEach(vm.allJobs, id: \.id) { job in
+         NavigationLink(destination: JobDetailView(job: job)) {
+         JobCard(job: job)
+         }
+         }
+         .padding(.bottom, 10)
+         }
+         .navigationTitle("Explore Jobs")
+         }
+         }*/
     }
 }
 

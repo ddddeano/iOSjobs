@@ -18,31 +18,9 @@ final class JobManager {
         listener?.remove()
     }
     
-    func createJob(job: JobManager.Job, completion: @escaping (Result<String, FirestoreManager.FirestoreError>) -> Void) {
-        firestoreManager.createDoc(collection: rootCollection, entity: job) { result in
-            switch result {
-            case .success(let documentId):
-                print("Job created successfully with ID: \(documentId)")
-                completion(.success(documentId))
-            case .failure(let error):
-                print("Error creating job: \(error)")
-                completion(.failure(error))
-            }
-        }
-    }
-    
-    func fetchAllJobs(completion: @escaping ([Job]) -> Void) {
-        listener = firestoreManager.fetchAllDocuments(collection: rootCollection) { (result: Result<[Job], FirestoreManager.FirestoreError>) in
-            switch result {
-            case .success(let jobs):
-                completion(jobs)
-            case .failure(let error):
-                print("Error fetching jobs: \(error)")
-                completion([])
-            }
-        }
-    }
+  
     struct Shift: Identifiable, FirestoreEntity {
+        var collectionName = "shifts"
         
         var id = UUID().uuidString
         var date: Date
@@ -55,7 +33,7 @@ final class JobManager {
             self.endTime = endTime
         }
         
-        init?(fromDocumentSnapshot documentSnapshot: DocumentSnapshot) {
+        init?(documentSnapshot: DocumentSnapshot) {
             guard let data = documentSnapshot.data(),
                   let dateTimestamp = data["date"] as? Timestamp,
                   let startTime = data["startTime"] as? String,

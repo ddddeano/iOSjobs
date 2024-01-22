@@ -10,6 +10,7 @@ import Firebase
 
 extension JobManager {
     class Job: ObservableObject, Identifiable, FirestoreEntity {
+        var collectionName = "jobs"
         
         @Published var id = ""
         @Published var role = ""
@@ -23,7 +24,7 @@ extension JobManager {
         
         init() {}
         
-        required init?(fromDocumentSnapshot documentSnapshot: DocumentSnapshot) {
+        required init?(documentSnapshot: DocumentSnapshot) {
             guard let data = documentSnapshot.data() else { return nil }
             
             self.id = documentSnapshot.documentID

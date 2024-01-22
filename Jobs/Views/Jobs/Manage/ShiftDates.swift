@@ -38,7 +38,8 @@ struct CreatedShiftsView: View {
         ScrollView {
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 6), spacing: 20) {
                 ForEach(shifts) { shift in
-                    ShiftCalendarCellView(shift: shift)
+                    Text("shift")
+                   // ShiftCalendarCellView(shift: shift)
                         .padding(.horizontal, 5)
                 }
             }

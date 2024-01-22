@@ -9,7 +9,8 @@ import Foundation
 import Firebase
 extension ShiftManager {
     final class Shift: ObservableObject, Identifiable, FirestoreEntity {
-        
+        var collectionName = "shifts"
+    
         @Published var id = ""
         @Published var jobId = ""
         @Published var date: Date
@@ -23,7 +24,7 @@ extension ShiftManager {
             self.endTime = Calendar.current.date(byAdding: .hour, value: 1, to: date) ?? date
         }
         
-        required init?(fromDocumentSnapshot documentSnapshot: DocumentSnapshot) {
+        required init?(documentSnapshot: DocumentSnapshot) {
             guard let data = documentSnapshot.data() else { return nil }
             
             self.id = documentSnapshot.documentID

@@ -8,19 +8,19 @@
 import SwiftUI
 import Firebase
 
-
 @main
 struct JobsApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     @StateObject var miseboxUser = MiseboxUserManager.MiseboxUser()
+    @StateObject var session = Session()
     
     var body: some Scene {
         WindowGroup {
-            Onboarding(vm: OnboardingViewModel(miseboxUser: miseboxUser))
-            .environmentObject(miseboxUser)
-
+            ContentView(vm: ContentViewModel(session: session, miseboxUser: miseboxUser))
+                .environmentObject(session)
+                .environmentObject(miseboxUser)
         }
     }
 }

@@ -11,42 +11,54 @@ import SwiftUI
 struct ManageJobsDashboard: View {
     @StateObject var job = JobManager.Job()
     @State private var navigationPath = NavigationPath()
-
+    
     var body: some View {
-        NavigationStack(path: $navigationPath) {
-            VStack(spacing: 20) {
-                DashboardButton(title: "Create Job", iconName: "plus.circle.fill") {
-                    navigationPath.append(StackItem.createJob)
-                }
-                DashboardButton(title: "My Jobs", iconName: "briefcase.fill") {
-                    navigationPath.append(StackItem.myJobs)
-                }
-                DashboardButton(title: "My Applicants", iconName: "person.3.fill") {
-                    
-                }
-
-                .navigationDestination(for: StackItem.self) { item in
-                    switch item {
-                    case .createJob:
-                        CreateJobView(createJobVm: CreateJobViewModel(job: job), navigationPath: $navigationPath)
-                            .environmentObject(job)
-                    case .shiftManager:
-                        ShiftManagerView(createJobVm: CreateJobViewModel(job: job), navigationPath: $navigationPath)
-                            .environmentObject(job)
-                    case .manageShifts:
-                        ManageShiftsView(createJobVm: CreateJobViewModel(job: job), navigationPath: $navigationPath)
-                            .environmentObject(job)
-                    case .myJobs:
-                        MyJobsView(navigationPath: $navigationPath)
-                    case .myApplicants:
-                        MyApplicantsView(navigationPath: $navigationPath)
+            NavigationStack(path: $navigationPath) {
+                ZStack {
+                    Color("PrimaryColour")
+                        .edgesIgnoringSafeArea(.all)
+                    VStack(spacing: 20) {
+                        CustomButton(title: "Create Job", action: {
+                            navigationPath.append(StackItem.createJob)
+                        }, style: .primary, iconName: "plus.circle.fill")
+                        
+                        CustomButton(title: "My Jobs", action: {
+                            navigationPath.append(StackItem.myJobs)
+                        }, style: .primary, iconName: "briefcase.fill")
+                        
+                        CustomButton(title: "My Applicants", action: {
+                            // Define action for My Applicants
+                        }, style: .primary, iconName: "person.3.fill")
+                        
+                        // Navigation destinations for each item
+                        .navigationDestination(for: StackItem.self) { item in
+                            switch item {
+                            case .createJob:
+                                CreateJobView(createJobVm: CreateJobViewModel(job: job), navigationPath: $navigationPath)
+                                    .environmentObject(job)
+                                    .background(Color("PrimaryColour")) // Set your desired background color
+                                
+                            case .shiftManager:
+                                ShiftManagerView(createJobVm: CreateJobViewModel(job: job), navigationPath: $navigationPath)
+                                    .environmentObject(job)
+                            case .manageShifts:
+                                ManageShiftsView(createJobVm: CreateJobViewModel(job: job), navigationPath: $navigationPath)
+                                    .environmentObject(job)
+                            case .myJobs:
+                                MyJobsView(navigationPath: $navigationPath)
+                            case .myApplicants:
+                                MyApplicantsView(navigationPath: $navigationPath)
+                            }
+                        }
                     }
                 }
-            }
-            .navigationTitle("Jobs Dashboard")
         }
+        .background(Color("PrimaryColour")) // Set your desired background color
+        .edgesIgnoringSafeArea(.all) // Extend the background color to the edges of the screen
     }
 }
+
+
 
 // Update StackItem enum to include new cases
 enum StackItem: Hashable {

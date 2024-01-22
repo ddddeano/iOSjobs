@@ -24,7 +24,7 @@ class CreateJobViewModel: ObservableObject {
     }
     
     private func createJob(job: JobManager.Job) {
-        self.showJobReviewSheet = false
+        /*self.showJobReviewSheet = false
         jobManager.createJob(job: job) { result in
             switch result {
             case .success(let documentId):
@@ -32,7 +32,7 @@ class CreateJobViewModel: ObservableObject {
             case .failure(let error):
                 print("Error creating job: \(error.localizedDescription)")
             }
-        }
+        }*/
     }
     
     func addShift(newShift: JobManager.Shift) {
@@ -42,7 +42,6 @@ class CreateJobViewModel: ObservableObject {
 
 struct CreateJobView: View {
     @StateObject var createJobVm: CreateJobViewModel
-    @EnvironmentObject var job: JobManager.Job
     @Binding var navigationPath: NavigationPath // Receiving this as a binding from the parent
     
     var body: some View {
@@ -51,7 +50,7 @@ struct CreateJobView: View {
                 .font(.title)
                 .padding()
             
-            InputFieldsView()
+           /* InputFieldsView()
             
             Button("Manage Shifts") {
                 print(navigationPath)
@@ -62,7 +61,7 @@ struct CreateJobView: View {
             .padding()
             .background(Color.blue)
             .foregroundColor(.white)
-            .cornerRadius(10)
+            .cornerRadius(10)*/
         
         }
     }
